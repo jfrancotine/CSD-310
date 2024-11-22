@@ -1,20 +1,24 @@
 import mysql.connector
 from mysql.connector import errorcode
+from dotenv import dotenv_values
+
+
+secrets = dotenv_values(".env")
 
 # Database configuration
 config = {
-    'user': 'movies_user',       # Updated username
-    'password': 'popcorn',       # Updated password
-    'host': '127.0.0.1',         # Use localhost
-    'database': 'movies',        # Database name
-    'raise_on_warnings': True    # Raise on warnings
+    'user': secrets["USER"],     
+    'password': secrets["PASSWORD"],
+    'host': secrets["HOST"],
+    'database': secrets["DATABASE"],
+    'raise_on_warnings': secrets["RAISE_ON_WARNINGS"] == "TRUE",
 }
 
 try:
     # Establish connection
     db = mysql.connector.connect(**config)
 
-    print("\n Database user {} connected to MySQL on host {} with database {}" .format(config["user"], config["host"], config["database"]))
+    print("\n Database user {} connected to MySQL on host {} with database {}" .format(secrets["USER"], secrets["HOST"], secrets["DATABASE"]))
 
     input("\n\n Press any key to continue...")
 
